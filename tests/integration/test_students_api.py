@@ -57,9 +57,9 @@ class TestCreateStudent:
         response = client.post("/api/v1/students/", json=sample_student_data)
         assert response.status_code == 422
 
-    def test_create_student_age_too_low_returns_422(self, client):
-        any["age"] = 5
-        response = client.post("/api/v1/students/", json=any)
+    def test_create_student_age_too_low_returns_422(self, client, sample_student_data):
+        sample_student_data["age"] = 5
+        response = client.post("/api/v1/students/", json=sample_student_data)
         assert response.status_code == 422
 
     def test_create_student_grade_out_of_range_returns_422(
@@ -144,9 +144,9 @@ class TestListStudents:
         assert data["total"] == 1
         assert data["students"][0]["department"] == "Computer Science"
 
-    def test_search_by_name(self, client, sample_student_data):
+    def test_search_by_name(self, client, sample_student_data, second_student_data):
         client.post("/api/v1/students/", json=sample_student_data)
-        client.post("/api/v1/students/", json=sample_student_data)
+        client.post("/api/v1/students/", json=second_student_data)
         response = client.get("/api/v1/students/?search=Alice")
         data = response.json()
         assert data["total"] == 1
@@ -234,8 +234,8 @@ class TestDeleteStudent:
         assert response.status_code == 200
         assert "deleted" in response.json()["message"].lower()
 
-    def test_deleted_student_no_longer_accessible(self, client):
-        student_id = any["id"]
+    def test_deleted_student_no_longer_accessible(self, client, created_student):
+        student_id = created_student["id"]
         client.delete(f"/api/v1/students/{student_id}")
         response = client.get(f"/api/v1/students/{student_id}")
         assert response.status_code == 404
