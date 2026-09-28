@@ -12,7 +12,7 @@ on:
 
 env:
   PYTHON_VERSION: "3.11"
-  DATABASE_URL: "sqlite:///./test_ci.db"
+  DATABASE_URL: "mysql+pymysql://root:1234@localhost:3306/Students.db"
 
 # Least privilege: the workflow token can only read the repo.
 permissions:
