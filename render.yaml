@@ -16,7 +16,7 @@ services:
       - key: ENVIRONMENT
         value: production
       - key: DATABASE_URL
-        value: sqlite:///./students.db   # Replace with PostgreSQL URL for production
+        value: mysql+pymysql://root:1234@localhost:3306/Students.db   # Replace with PostgreSQL URL for production
       - key: SECRET_KEY
         generateValue: true              # Render auto-generates a secure random value
       - key: PYTHON_VERSION
