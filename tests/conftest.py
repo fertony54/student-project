@@ -13,7 +13,7 @@ from app.db.database import Base, get_db
 from app.main import app
 
 # ── Test Database ────────────────────────────────────────────────────────────
-TEST_DATABASE_URL = "sqlite:///./test_students.db"
+TEST_DATABASE_URL = "mysql+pymysql://root:1234@localhost:3306/Students.db"
 
 test_engine = create_engine(
     TEST_DATABASE_URL,
